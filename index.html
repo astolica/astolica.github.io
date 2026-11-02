@@ -1,242 +1,727 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Alec Teran · OffSec & Vulnerability Analysis + Management</title>
-  <meta name="description" content="Portfolio of Alec Teran, aspiring red teamer learning C, Linux, and systems exploitation." />
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎏</text></svg>" />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@500;700;800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="css/style.css" />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Alec Teran | Cybersecurity Student &amp; Analyst</title>
+<meta name="description" content="Alec Teran (astolica), cybersecurity student at the University of Arizona and cybersecurity analyst focused on vulnerability assessment and remediation.">
+<style>
+  :root{
+    --ink:#1a1f24;
+    --muted:#5c6773;
+    --line:#e7ebef;
+    --card:#ffffff;
+    --accent:#d9452b;      /* koi red-orange */
+    --accent-2:#e8912a;    /* koi gold */
+    --accent-soft:#fbe9e3;
+    --ripple:#f3f7fa;
+    --max:1040px;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    margin:0;
+    font-family:"Segoe UI",system-ui,-apple-system,Roboto,Helvetica,Arial,sans-serif;
+    color:var(--ink);
+    background:#ffffff;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  /* Koi water canvas sits behind everything */
+  #koi{
+    position:fixed;
+    inset:0;
+    width:100%;
+    height:100%;
+    z-index:0;
+    display:block;
+    background:
+      radial-gradient(1200px 800px at 70% -10%, var(--ripple), #ffffff 60%),
+      #ffffff;
+  }
+
+  .wrap{position:relative;z-index:1;max-width:var(--max);margin:0 auto;padding:0 24px}
+
+  /* Nav */
+  header.nav{
+    position:sticky;top:0;z-index:5;
+    backdrop-filter:saturate(1.2) blur(8px);
+    background:rgba(255,255,255,.72);
+    border-bottom:1px solid var(--line);
+  }
+  .nav-inner{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:14px 24px;max-width:var(--max);margin:0 auto}
+  .brand{display:flex;align-items:center;gap:10px;font-weight:700;letter-spacing:.2px}
+  .brand .dot{width:12px;height:12px;border-radius:50%;background:var(--accent);box-shadow:0 0 0 4px var(--accent-soft)}
+  .nav a{color:var(--muted);text-decoration:none;font-size:.95rem;margin-left:18px;font-weight:600}
+  .nav a:hover{color:var(--accent)}
+  .nav nav{display:flex;flex-wrap:wrap}
+
+  /* Hero */
+  .hero{padding:96px 0 64px;text-align:center}
+  .kicker{display:inline-block;font-size:.8rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);background:var(--accent-soft);padding:6px 14px;border-radius:999px}
+  .hero h1{font-size:clamp(2.1rem,6vw,3.6rem);line-height:1.08;margin:20px 0 10px;letter-spacing:-.02em}
+  .hero .sub{font-size:clamp(1.05rem,2.4vw,1.35rem);color:var(--muted);max-width:620px;margin:0 auto 10px;font-weight:500}
+  .hero .tag{color:var(--ink);font-weight:600}
+  .cta{margin-top:26px;display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+  .btn{display:inline-flex;align-items:center;gap:8px;padding:11px 20px;border-radius:10px;font-weight:600;text-decoration:none;font-size:.95rem;transition:transform .15s ease, box-shadow .15s ease}
+  .btn.primary{background:var(--accent);color:#fff;box-shadow:0 6px 18px rgba(217,69,43,.28)}
+  .btn.ghost{background:#fff;color:var(--ink);border:1px solid var(--line)}
+  .btn:hover{transform:translateY(-2px)}
+
+  /* Sections */
+  section{padding:58px 0;scroll-margin-top:72px}
+  .section-head{display:flex;align-items:baseline;gap:14px;margin-bottom:28px}
+  .section-head h2{font-size:1.7rem;margin:0;letter-spacing:-.01em}
+  .section-head .num{font-family:"Consolas",monospace;color:var(--accent);font-weight:700;font-size:1rem}
+  .lead{color:var(--muted);max-width:760px}
+
+  .card{background:rgba(255,255,255,.92);-webkit-backdrop-filter:blur(3px);backdrop-filter:blur(3px);border:1px solid var(--line);border-radius:16px;padding:26px;box-shadow:0 1px 2px rgba(20,30,40,.04)}
+
+  /* About */
+  .about-grid{display:grid;grid-template-columns:1.4fr .9fr;gap:22px}
+  .about-grid p{margin-top:0}
+  .facts{list-style:none;margin:0;padding:0;display:grid;gap:12px}
+  .facts li{display:flex;gap:10px;font-size:.95rem;color:var(--ink)}
+  .facts b{color:var(--muted);font-weight:600;min-width:84px;display:inline-block}
+
+  /* Projects */
+  .projects{display:grid;grid-template-columns:repeat(2,1fr);gap:20px}
+  .project{position:relative;display:flex;flex-direction:column;transition:transform .15s ease,box-shadow .15s ease}
+  .project:hover{transform:translateY(-4px);box-shadow:0 14px 30px rgba(20,30,40,.09)}
+  .project h3{margin:0 0 4px;font-size:1.15rem;display:flex;align-items:center;gap:8px}
+  .project .role{font-size:.78rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--accent-2)}
+  .project p{color:var(--muted);font-size:.95rem;margin:10px 0 16px}
+  .stack{display:flex;flex-wrap:wrap;gap:7px;margin-top:auto}
+  .chip{font-family:"Consolas",monospace;font-size:.72rem;color:var(--ink);background:#f4f6f8;border:1px solid var(--line);padding:4px 9px;border-radius:7px}
+  .project .links{margin-top:14px;display:flex;gap:14px}
+  .project .links a{color:var(--accent);font-weight:600;font-size:.88rem;text-decoration:none}
+  .project .links a:hover{text-decoration:underline}
+
+  /* Skills */
+  .skills-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+  .skills-grid h3{margin:0 0 12px;font-size:1rem;letter-spacing:.02em}
+  .skills-grid ul{margin:0;padding-left:18px;color:var(--muted);font-size:.93rem}
+  .skills-grid li{margin-bottom:6px}
+  .badge-row{display:flex;flex-wrap:wrap;gap:10px;margin-top:18px}
+  .badge{font-size:.82rem;font-weight:600;padding:7px 13px;border-radius:999px;border:1px solid var(--line);background:#fff}
+  .badge.done{color:#1f7a44;border-color:#cfe9d8;background:#eefaf1}
+  .badge.wip{color:#b06a00;border-color:#f3e0bf;background:#fdf6e9}
+  .badge.goal{color:var(--muted)}
+
+  /* Experience */
+  .timeline{display:grid;gap:16px}
+  .tl{display:grid;grid-template-columns:150px 1fr;gap:18px;align-items:start}
+  .tl .when{font-family:"Consolas",monospace;font-size:.82rem;color:var(--accent);padding-top:4px}
+  .tl h3{margin:0 0 2px;font-size:1.05rem}
+  .tl .where{color:var(--muted);font-size:.9rem;margin-bottom:6px}
+  .tl p{margin:0;color:var(--muted);font-size:.93rem}
+
+  /* Footer */
+  footer{padding:54px 0 70px;text-align:center;border-top:1px solid var(--line);margin-top:30px;background:rgba(255,255,255,.7)}
+  footer .links{display:flex;gap:16px;justify-content:center;flex-wrap:wrap;margin-bottom:16px}
+  footer a{color:var(--ink);text-decoration:none;font-weight:600;border:1px solid var(--line);padding:9px 16px;border-radius:10px;background:#fff}
+  footer a:hover{color:var(--accent);border-color:var(--accent)}
+  footer small{color:var(--muted)}
+
+  .reveal{opacity:0;transform:translateY(16px);transition:opacity .6s ease,transform .6s ease}
+  .reveal.in{opacity:1;transform:none}
+
+  @media (max-width:820px){
+    .about-grid,.projects,.skills-grid{grid-template-columns:1fr}
+    .tl{grid-template-columns:1fr}
+    .nav nav{display:none}
+    .hero{padding:72px 0 44px}
+  }
+  @media (prefers-reduced-motion:reduce){
+    .reveal{opacity:1;transform:none;transition:none}
+  }
+</style>
 </head>
 <body>
-  <!-- The koi pond: animated canvas behind everything -->
-  <canvas id="pond" aria-hidden="true"></canvas>
+<canvas id="koi" aria-hidden="true"></canvas>
 
-  <header class="nav">
-    <a href="#top" class="nav__brand">
-      <span class="nav__kanji">鯉</span>
-      <span>Alec Teran</span>
-    </a>
+<header class="nav">
+  <div class="nav-inner">
+    <div class="brand"><span class="dot"></span> Alec Teran <span style="color:var(--muted);font-weight:500">/ astolica</span></div>
     <nav>
-      <ul class="nav__links">
-        <li><a href="#about">About</a></li>
-        <li><a href="#focus">Focus</a></li>
-        <li><a href="#learning">Learning</a></li>
-        <li><a href="#projects">Projects</a></li>
-        <li><a href="#contact">Contact</a></li>
-      </ul>
+      <a href="#about">About</a>
+      <a href="#projects">Projects</a>
+      <a href="#skills">Skills</a>
+      <a href="#experience">Experience</a>
+      <a href="#contact">Contact</a>
     </nav>
-  </header>
+  </div>
+</header>
 
-  <main id="top">
-    <!-- ============ HERO ============ -->
-    <section class="hero">
-      <div class="hero__kanji" aria-hidden="true">鯉</div>
-      <p class="eyebrow">Offensive Security · Red Team</p>
-      <h1 class="hero__title">
-        Hi, I'm <span class="accent">Alec Teran</span>
-      </h1>
-      <p class="hero__tagline">
-        Aspiring red teamer with concurrent focuses in learning <strong>C</strong>,
-        <strong>Linux</strong>, and <strong>systems exploitation</strong>.
-      </p>
+<main class="wrap">
 
-      <div class="terminal" role="img" aria-label="Terminal showing whoami output">
-        <div class="terminal__bar"><span></span><span></span><span></span></div>
-        <pre class="terminal__body"><span class="t-prompt">koi@pond:~$</span> whoami
-<span class="t-out">astolica</span>
-<span class="t-prompt">koi@pond:~$</span> cat focus.txt
-<span class="t-out">red teaming // exploit dev // linux internals</span>
-<span class="t-prompt">koi@pond:~$</span> <span class="cursor">▌</span></pre>
+  <section class="hero" id="top">
+    <span class="kicker">Vulnerability Assessment &amp; Remediation</span>
+    <h1>Alec Teran</h1>
+    <p class="sub"><span class="tag">Cybersecurity student</span> at the University of Arizona and a <span class="tag">cybersecurity analyst</span> focused on finding weaknesses and helping fix them.</p>
+    <div class="cta">
+      <a class="btn primary" href="#projects">See my work</a>
+      <a class="btn ghost" href="https://github.com/astolica" target="_blank" rel="noopener">GitHub</a>
+    </div>
+  </section>
+
+  <section id="about" class="reveal">
+    <div class="section-head"><span class="num">01</span><h2>About</h2></div>
+    <div class="about-grid">
+      <div class="card">
+        <p>I am a cybersecurity student in the University of Arizona's CAE-CO designated program, currently working as a cybersecurity analyst on vulnerability assessment and remediation. My day-to-day is about understanding how systems break, then helping close the gap before someone else finds it.</p>
+        <p>My deeper interest sits on the offensive and low-level side: exploit development and vulnerability research. I spend my time building honeypots and home labs, learning C and x86 assembly, and working through offensive security certifications. I am headed toward red teaming and vulnerability research, with my sights set on federal and DoD work.</p>
       </div>
-
-      <div class="hero__cta">
-        <a href="#projects" class="btn btn--primary">View Projects</a>
-        <a href="https://github.com/astolica" class="btn btn--ghost" target="_blank" rel="noopener">GitHub ↗</a>
-      </div>
-      <p class="hero__hint">tip: click the pond to feed the koi</p>
-    </section>
-
-    <!-- ============ ABOUT ============ -->
-    <section id="about" class="section">
-      <h2 class="section__title"><span class="section__num">01</span> The Koi's Path</h2>
-      <div class="card about">
-        <blockquote class="about__quote">
-          Legend says a koi that swims up the waterfall at the Dragon Gate
-          becomes a dragon.
-        </blockquote>
-        <div class="about__text">
-          <p>
-            My name is <strong>Alec Teran</strong>, a student at the University of Arizona
-            working toward a career in <strong>red teaming</strong> and offensive security.
-            I'm drawn to understanding systems from the ground up, how memory, processes,
-            and the kernel really work, so I can find where they may break.
-          </p>
-          <p>
-            Right now I'm building my foundation in C, Linux, and systems exploitation.
-            Like the koi, I'm in it for the long climb.
-          </p>
-        </div>
-      </div>
-    </section>
-
-    <!-- ============ FOCUS ============ -->
-    <section id="focus" class="section">
-      <h2 class="section__title"><span class="section__num">02</span> Red Team Focus</h2>
-      <div class="grid grid--3">
-        <article class="card focus">
-          <div class="focus__icon">⚔</div>
-          <h3>Exploit Development</h3>
-          <p>Memory corruption, stack and heap exploitation, and bypassing modern mitigations like NX, ASLR, and stack canaries.</p>
-        </article>
-        <article class="card focus">
-          <div class="focus__icon">🐧</div>
-          <h3>Linux Internals</h3>
-          <p>Processes, syscalls, permissions, and the ELF format. Knowing the OS well enough to escalate, persist, and evade.</p>
-        </article>
-        <article class="card focus">
-          <div class="focus__icon">🎯</div>
-          <h3>Adversary Mindset</h3>
-          <p>Thinking like an attacker so defenders can do better. Recon, initial access, privilege escalation, and clear reporting.</p>
-        </article>
-      </div>
-    </section>
-
-    <!-- ============ LEARNING ============ -->
-    <section id="learning" class="section">
-      <h2 class="section__title"><span class="section__num">03</span> Currently Learning</h2>
-      <p class="section__lead">Every scale on the koi is earned. Here's where I'm at.</p>
-
-      <!-- TODO: adjust the --progress values (0–100) and topics as you grow -->
-      <div class="grid grid--3">
-        <article class="card learn">
-          <header class="learn__head">
-            <h3>C Programming</h3>
-            <span class="badge">in progress</span>
-          </header>
-          <div class="progress" style="--progress: 20"><span></span></div>
-          <ul class="learn__list">
-            <li class="done">Pointers &amp; memory layout</li>
-            <li class="done">Structs, arrays, strings</li>
-            <li>Dynamic memory (malloc/free)</li>
-            <li>Writing safe vs. unsafe code</li>
-          </ul>
-        </article>
-
-        <article class="card learn">
-          <header class="learn__head">
-            <h3>Linux</h3>
-            <span class="badge">in progress</span>
-          </header>
-          <div class="progress" style="--progress: 40"><span></span></div>
-          <ul class="learn__list">
-            <li class="done">Shell, filesystem, permissions</li>
-            <li class="done">Processes &amp; signals</li>
-            <li>Syscalls &amp; strace/ltrace</li>
-            <li>ELF binaries &amp; linking</li>
-          </ul>
-        </article>
-
-        <article class="card learn">
-          <header class="learn__head">
-            <h3>Systems Exploitation</h3>
-            <span class="badge badge--new">just started</span>
-          </header>
-          <div class="progress" style="--progress: 15"><span></span></div>
-          <ul class="learn__list">
-            <li class="done">Stack frames &amp; GDB basics</li>
-            <li>Stack buffer overflows</li>
-            <li>Format string bugs</li>
-            <li>ROP &amp; ret2libc</li>
-          </ul>
-        </article>
-      </div>
-
-      <div class="card tools">
-        <h3>Toolbox</h3>
-        <!-- TODO: add/remove tools you actually use -->
-        <ul class="tags">
-          <li>C</li><li>Bash</li><li>Python</li><li>GDB / pwndbg</li>
-          <li>Ghidra</li><li>pwntools</li><li>Linux</li><li>Git</li>
-          <li>Flask</li><li>MySQL</li><li>Nmap</li><li>Ollama</li>
+      <div class="card">
+        <ul class="facts">
+          <li><b>Role</b> Cybersecurity analyst</li>
+          <li><b>Study</b> B.S. Cybersecurity, University of Arizona</li>
+          <li><b>Focus</b> Vuln assessment, exploit dev, vuln research</li>
+          <li><b>Based</b> Arizona</li>
+          <li><b>Handle</b> astolica</li>
         </ul>
       </div>
-    </section>
+    </div>
+  </section>
 
-    <!-- ============ PROJECTS ============ -->
-    <section id="projects" class="section">
-      <h2 class="section__title"><span class="section__num">04</span> Projects</h2>
-      <p class="section__lead">Things I've built and broken along the way.</p>
+  <section id="projects" class="reveal">
+    <div class="section-head"><span class="num">02</span><h2>Projects</h2></div>
+    <p class="lead" style="margin-bottom:26px">A mix of defensive tooling, infrastructure, and research. Most of it lives on my GitHub.</p>
+    <div class="projects">
 
-      <!-- To add a project, copy one <article class="card project"> block. -->
-      <div class="grid grid--2">
-        <article class="card project">
-          <div class="project__koi" aria-hidden="true"></div>
-          <p class="project__meta">Purple Team · AI Security</p>
-          <h3>R3D</h3>
-          <p>A fully local, autonomous purple team agent. It runs OSINT and active recon, correlates CVEs against a local NVD database, tests AI attack surfaces, and maps each finding to MITRE ATT&amp;CK and to frameworks like NIST 800-53 and ISO 27001. A built-in verifier catches LLM hallucinations before they reach the report.</p>
-          <ul class="tags tags--sm"><li>Python</li><li>Ollama</li><li>Nmap</li><li>MITRE ATT&amp;CK</li><li>GRC</li></ul>
-          <div class="project__links">
-            <a href="https://github.com/astolica/R3D-SIFT" target="_blank" rel="noopener">Code ↗</a>
-          </div>
-        </article>
+      <article class="card project">
+        <span class="role">Honeypot &amp; Deception</span>
+        <h3>SweetSting</h3>
+        <p>A Python honeypot and deception framework running on a Raspberry Pi 4. It serves a convincing fake Flask portal backed by MySQL with Argon2-hashed credentials, plants canary tripwires, fires email and webhook alerts, logs attacker behavior, and reports through a live Rich terminal dashboard. Isolated on its own VLAN with a Wazuh agent feeding my SIEM.</p>
+        <div class="stack">
+          <span class="chip">Python</span><span class="chip">Flask</span><span class="chip">MySQL</span><span class="chip">Argon2</span><span class="chip">Wazuh</span><span class="chip">Raspberry Pi</span>
+        </div>
+      </article>
 
-        <article class="card project">
-          <div class="project__koi" aria-hidden="true"></div>
-          <p class="project__meta">Deception · Threat Detection</p>
-          <h3>SweetSting</h3>
-          <p>A honeypot and canary-credential framework for low-resource Linux systems. It serves a fake router login page, logs every attempt to MySQL, fires alerts when planted canary credentials are used, and shows activity live in a terminal dashboard. It's exposed through a Cloudflare Tunnel.</p>
-          <ul class="tags tags--sm"><li>Python</li><li>Flask</li><li>MySQL</li><li>Honeypot</li><li>Raspberry Pi</li></ul>
-          <div class="project__links">
-            <a href="https://github.com/astolica/SweetSting" target="_blank" rel="noopener">Code ↗</a>
-          </div>
-        </article>
+      <article class="card project">
+        <span class="role">Log Analysis</span>
+        <h3>sugarSearch.py</h3>
+        <p>A companion log parser for SweetSting that chews through honeypot logs to flag brute-force source IPs and automated user agents. Built with the standard library: json, argparse, and collections.Counter, so it stays fast and dependency-free.</p>
+        <div class="stack">
+          <span class="chip">Python</span><span class="chip">argparse</span><span class="chip">Counter</span><span class="chip">log parsing</span>
+        </div>
+      </article>
 
-        <article class="card project">
-          <div class="project__koi" aria-hidden="true"></div>
-          <p class="project__meta">Workshop · WiCyS Tucson</p>
-          <h3>Cryptography CTF Scripts</h3>
-          <p>Solver scripts I built for a cryptography CTF workshop with the Women in Cybersecurity (WiCyS) Tucson Student Chapter. They cover encodings, Caesar brute-forcing, XOR, modular arithmetic, and RSA encryption and decryption from first principles.</p>
-          <ul class="tags tags--sm"><li>Python</li><li>RSA</li><li>XOR</li><li>CTF</li><li>Teaching</li></ul>
-          <div class="project__links">
-            <a href="https://github.com/astolica/cryptographyCTFScripts" target="_blank" rel="noopener">Code ↗</a>
-          </div>
-        </article>
+      <article class="card project">
+        <span class="role">AI Security Research</span>
+        <h3>R3D-SIFT</h3>
+        <p>An autonomous purple-team agent that runs fully local, no cloud APIs. One engagement produces red-team findings, blue-team telemetry for SIEM ingestion, and GRC compliance output at once: offensive recon, AI-surface testing, CVE correlation, and automatic mapping to frameworks like NIST 800-53, ISO 27001, and CIS Controls v8. The product of over a year of original work.</p>
+        <div class="stack">
+          <span class="chip">Python</span><span class="chip">Ollama</span><span class="chip">Nmap</span><span class="chip">CVE / NVD</span><span class="chip">GRC</span>
+        </div>
+        <div class="links"><a href="https://github.com/astolica/R3D-SIFT" target="_blank" rel="noopener">View repository &#8599;</a></div>
+      </article>
 
-        <article class="card project">
-          <div class="project__koi" aria-hidden="true"></div>
-          <p class="project__meta">Learning in Public</p>
-          <h3>beej: Learning C</h3>
-          <p>My C learning journal, worked through Beej's Guide chapter by chapter. It covers operators and flow control, functions, arrays and pointers, file I/O, and dynamic memory with <code>malloc</code>: the foundation for systems exploitation.</p>
-          <ul class="tags tags--sm"><li>C</li><li>Pointers</li><li>malloc</li><li>File I/O</li></ul>
-          <div class="project__links">
-            <a href="https://github.com/astolica/beej" target="_blank" rel="noopener">Code ↗</a>
-          </div>
-        </article>
-      </div>
-    </section>
+      <article class="card project">
+        <span class="role">Infrastructure</span>
+        <h3>Proxmox Homelab</h3>
+        <p>A Proxmox virtualization lab on a ThinkCentre M710q running a Wazuh SIEM manager, with VLAN isolation worked out across a GL.iNet router and managed switch. Designed toward a four-zone architecture, attack, target, blue team, and management, with pfSense as the internal lab firewall.</p>
+        <div class="stack">
+          <span class="chip">Proxmox</span><span class="chip">Wazuh</span><span class="chip">VLANs</span><span class="chip">pfSense</span><span class="chip">Linux</span>
+        </div>
+      </article>
 
-    <!-- ============ CONTACT ============ -->
-    <section id="contact" class="section">
-      <h2 class="section__title"><span class="section__num">05</span> Contact</h2>
-      <div class="card contact">
-        <p>Want to talk security, CTFs, or opportunities? Find me on GitHub or LinkedIn.</p>
-        <div class="contact__links">
-          <a href="https://github.com/astolica" target="_blank" rel="noopener" class="btn btn--ghost">GitHub</a>
-          <a href="https://www.linkedin.com/in/alec-t-744352376/" target="_blank" rel="noopener" class="btn btn--primary">LinkedIn</a>
+      <article class="card project">
+        <span class="role">Automation</span>
+        <h3>Discord Verifier Bot</h3>
+        <p>An email verification bot that confirms arizona.edu addresses before granting access to a club Discord server, running on a dedicated Raspberry Pi in my homelab. Keeps the community members-only without manual vetting.</p>
+        <div class="stack">
+          <span class="chip">Python</span><span class="chip">Discord API</span><span class="chip">email verify</span><span class="chip">Raspberry Pi</span>
+        </div>
+      </article>
+
+      <article class="card project">
+        <span class="role">Learning In Public</span>
+        <h3>beej</h3>
+        <p>My working repository for learning C from the ground up, following Beej's Guide. Pointers and pointer arithmetic, structs, strings, dynamic memory with malloc, typedefs, and more, each concept with its own small programs. Groundwork for exploit development.</p>
+        <div class="stack">
+          <span class="chip">C</span><span class="chip">pointers</span><span class="chip">malloc</span><span class="chip">memory</span>
+        </div>
+        <div class="links"><a href="https://github.com/astolica/beej" target="_blank" rel="noopener">View repository &#8599;</a></div>
+      </article>
+
+    </div>
+  </section>
+
+  <section id="skills" class="reveal">
+    <div class="section-head"><span class="num">03</span><h2>Skills &amp; Certifications</h2></div>
+    <div class="card">
+      <div class="skills-grid">
+        <div>
+          <h3>Languages &amp; Low-Level</h3>
+          <ul>
+            <li>Python</li>
+            <li>C</li>
+            <li>x86 32-bit NASM assembly</li>
+            <li>GDB with pwndbg / gef</li>
+          </ul>
+        </div>
+        <div>
+          <h3>Security &amp; Tooling</h3>
+          <ul>
+            <li>Vulnerability assessment &amp; remediation</li>
+            <li>Wireshark</li>
+            <li>Hashcat</li>
+            <li>Wazuh SIEM</li>
+            <li>Nmap &amp; CVE correlation</li>
+          </ul>
+        </div>
+        <div>
+          <h3>Dev &amp; Infrastructure</h3>
+          <ul>
+            <li>Flask, SQLAlchemy</li>
+            <li>Argon2</li>
+            <li>Proxmox, Linux</li>
+            <li>VLANs, pfSense, networking</li>
+          </ul>
         </div>
       </div>
-    </section>
-  </main>
+      <div class="badge-row">
+        <span class="badge done">CompTIA Security+ (SY0-701)</span>
+        <span class="badge wip">Network+ in progress</span>
+        <span class="badge goal">HTB CPTS (next)</span>
+        <span class="badge goal">OSCP (goal)</span>
+      </div>
+    </div>
+  </section>
 
-  <footer class="footer">
-    <p>© <span id="year"></span> Alec Teran · 七転び八起き: fall seven times, rise eight.</p>
-    <p class="footer__ethics">All security testing shown here was done on systems I own or am authorized to test.</p>
-  </footer>
+  <section id="experience" class="reveal">
+    <div class="section-head"><span class="num">04</span><h2>Experience &amp; Involvement</h2></div>
+    <div class="card">
+      <div class="timeline">
+        <div class="tl">
+          <div class="when">Current</div>
+          <div>
+            <h3>Cybersecurity Analyst</h3>
+            <div class="where">Vulnerability Assessment &amp; Remediation</div>
+            <p>Identify, assess, and help remediate security weaknesses across systems, translating findings into fixes that actually get shipped.</p>
+          </div>
+        </div>
+        <div class="tl">
+          <div class="when">Current</div>
+          <div>
+            <h3>Social Media &amp; Outreach Chair</h3>
+            <div class="where">WiCyS, University of Arizona chapter</div>
+            <p>Lead outreach and communications for the Women in Cybersecurity chapter, growing visibility and connecting students to the wider security community.</p>
+          </div>
+        </div>
+        <div class="tl">
+          <div class="when">Ongoing</div>
+          <div>
+            <h3>B.S. in Cybersecurity</h3>
+            <div class="where">University of Arizona, CAE-CO designated program</div>
+            <p>Studying toward a bachelor's with plans to continue to a master's emphasizing vulnerability exploitation, aiming at red teaming and vulnerability research.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
 
-  <script src="js/koi.js"></script>
+</main>
+
+<footer id="contact">
+  <div class="wrap">
+    <h2 style="margin:0 0 6px">Let's connect</h2>
+    <p style="color:var(--muted);margin:0 0 22px">Open to internships and roles in offensive security, vulnerability research, and the federal pipeline.</p>
+    <div class="links">
+      <a href="https://github.com/astolica" target="_blank" rel="noopener">GitHub</a>
+      <a href="https://www.linkedin.com/in/alec-t-744352376/" target="_blank" rel="noopener">LinkedIn</a>
+    </div>
+    <small>&copy; <span id="yr"></span> Alec Teran (astolica). Koi swim below the surface.</small>
+  </div>
+</footer>
+
+<script>
+/* ---------- Scroll reveal ---------- */
+document.getElementById('yr').textContent = new Date().getFullYear();
+(function(){
+  var els = document.querySelectorAll('.reveal');
+  if(!('IntersectionObserver' in window)){els.forEach(function(e){e.classList.add('in')});return;}
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(en){ if(en.isIntersecting){en.target.classList.add('in'); io.unobserve(en.target);} });
+  },{threshold:.12});
+  els.forEach(function(e){io.observe(e)});
+})();
+
+/* ---------- Koi pond (top-view swimming koi) ---------- */
+(function(){
+  var canvas = document.getElementById('koi');
+  var ctx = canvas.getContext('2d');
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var W = 0, H = 0, DPR = 1;
+  var TAU = Math.PI * 2;
+
+  function rand(a,b){ return a + Math.random()*(b-a); }
+  function clamp(v,a,b){ return v < a ? a : (v > b ? b : v); }
+  function angDiff(a,b){ return Math.atan2(Math.sin(a-b), Math.cos(a-b)); }
+
+  function resize(){
+    DPR = Math.min(window.devicePixelRatio || 1, 2);
+    W = window.innerWidth; H = window.innerHeight;
+    canvas.width = Math.round(W*DPR); canvas.height = Math.round(H*DPR);
+    ctx.setTransform(DPR,0,0,DPR,0,0);
+  }
+  resize();
+
+  /* Natural koi varieties */
+  var WHITE = '#fbfaf6', RED = '#d43f28', BLACK = '#1d1d20';
+  var VARIETIES = [
+    { body:WHITE,     fin:'rgba(208,218,226,0.55)', pattern:'kohaku',  w:3 }, // white with red
+    { body:WHITE,     fin:'rgba(208,218,226,0.55)', pattern:'sanke',   w:2 }, // white, red, black
+    { body:WHITE,     fin:'rgba(208,218,226,0.55)', pattern:'tancho',  w:1 }, // white with red head spot
+    { body:'#f1b03a', fin:'rgba(244,186,84,0.5)',   pattern:'none',    w:2 }, // yamabuki ogon (gold)
+    { body:'#ea7429', fin:'rgba(238,136,66,0.45)',  pattern:'orenji',  w:2 }, // orange with white
+    { body:BLACK,     fin:'rgba(70,70,76,0.4)',     pattern:'showa',   w:1 }, // black, red, white
+    { body:'#e8ebee', fin:'rgba(200,208,215,0.55)', pattern:'none',    w:1 }  // platinum
+  ];
+  function pickVariety(){
+    var tot = 0, i;
+    for(i=0;i<VARIETIES.length;i++) tot += VARIETIES[i].w;
+    var r = Math.random()*tot;
+    for(i=0;i<VARIETIES.length;i++){ r -= VARIETIES[i].w; if(r <= 0) return VARIETIES[i]; }
+    return VARIETIES[0];
+  }
+
+  /* Body half-width along the fish: s=0 nose, s=1 tail base */
+  function halfWidth(s){
+    if(s < 0.28){ var u = s/0.28; return 0.62 + 0.38*Math.sin(u*Math.PI/2); }
+    var u2 = (s-0.28)/0.72;
+    return Math.max(0.1, 1 - 0.9*Math.pow(u2, 1.35));
+  }
+
+  /* Pattern patches in body coordinates (s along body, lat across body) */
+  function makeSpots(pattern){
+    var spots = [];
+    function cluster(s0, s1, color, size){
+      var k = 3 + (Math.random()*3|0);
+      for(var i=0;i<k;i++){
+        spots.push({ s:rand(s0,s1), lat:rand(-0.5,0.5), ra:rand(0.055,0.1)*size,
+                     rb:rand(0.75,1.3)*size, rot:rand(-0.6,0.6), c:color });
+      }
+    }
+    function dot(s, lat, ra, rb, color){
+      spots.push({ s:s, lat:lat, ra:ra, rb:rb, rot:rand(-0.4,0.4), c:color });
+    }
+    if(pattern === 'kohaku' || pattern === 'sanke'){
+      cluster(0.03, 0.17, RED, 1);
+      cluster(0.28, 0.48, RED, 1);
+      if(Math.random() < 0.7) cluster(0.55, 0.72, RED, 0.85);
+      if(pattern === 'sanke'){
+        var k = 3 + (Math.random()*3|0);
+        for(var i=0;i<k;i++) dot(rand(0.25,0.8), rand(-0.8,0.8), rand(0.018,0.035), rand(0.25,0.45), BLACK);
+      }
+    } else if(pattern === 'tancho'){
+      dot(0.1, 0, 0.05, 0.6, RED);
+    } else if(pattern === 'orenji'){
+      if(Math.random() < 0.8) cluster(0.35, 0.55, WHITE, 0.9);
+      if(Math.random() < 0.5) cluster(0.0, 0.1, WHITE, 0.8);
+    } else if(pattern === 'showa'){
+      cluster(0.05, 0.2, RED, 1);
+      cluster(0.32, 0.5, RED, 0.9);
+      cluster(0.2, 0.32, WHITE, 0.8);
+      cluster(0.55, 0.7, WHITE, 0.7);
+    }
+    return spots;
+  }
+
+  /* ---------- Koi ---------- */
+  function Koi(){
+    var base = clamp(Math.min(W, H)*0.24, 100, 210);
+    this.L = base*rand(0.62, 1.05);            // overall length incl. tail fin
+    this.n = 22;                              // spine points
+    this.seg = (this.L*0.74)/(this.n-1);      // body is ~74% of length, fin is the rest
+    this.maxHalf = this.L*0.105;              // half-width at the shoulders
+    this.v0 = rand(13, 21)*(this.L/160);      // cruising speed, px per second
+    this.heading = rand(0, TAU);
+    this.omega = 0;
+    this.ph = rand(0, 100); this.ph2 = rand(0, 100);
+    this.beat = rand(0, TAU); this.finBeat = rand(0, TAU);
+    this.boost = 0;
+    this.variety = pickVariety();
+    this.spots = makeSpots(this.variety.pattern);
+    var x = rand(W*0.1, W*0.9), y = rand(H*0.1, H*0.9);
+    this.pts = [];
+    for(var i=0;i<this.n;i++){
+      this.pts.push({ x:x - Math.cos(this.heading)*this.seg*i, y:y - Math.sin(this.heading)*this.seg*i });
+    }
+  }
+
+  Koi.prototype.step = function(dt, t, school, rings){
+    var h = this.pts[0], L = this.L, steer = 0;
+
+    // gentle meandering
+    var wander = 0.26*Math.sin(t*0.11 + this.ph) + 0.1*Math.sin(t*0.29 + this.ph2);
+
+    // turn back toward the middle when nearing the edges
+    var m = L*0.9;
+    var edge = Math.min(h.x, W - h.x, h.y, H - h.y);
+    if(edge < m){
+      var w = clamp((m - edge)/m, 0, 1.4);
+      steer += angDiff(Math.atan2(H/2 - h.y, W/2 - h.x), this.heading)*1.1*w;
+    }
+
+    // keep some space from other koi
+    for(var j=0;j<school.length;j++){
+      var o = school[j]; if(o === this) continue;
+      var dx = h.x - o.pts[0].x, dy = h.y - o.pts[0].y, d = Math.hypot(dx, dy), R = (L + o.L)*0.5;
+      if(d < R && d > 0.01) steer += angDiff(Math.atan2(dy, dx), this.heading)*0.3*(1 - d/R);
+    }
+
+    // scatter from click ripples
+    for(var r=0;r<rings.length;r++){
+      var rg = rings[r]; if(rg.amb || rg.age > 1.2) continue;
+      var rx = h.x - rg.x, ry = h.y - rg.y, rd = Math.hypot(rx, ry), RR = L*2.4;
+      if(rd < RR){
+        steer += angDiff(Math.atan2(ry, rx), this.heading)*2.2*(1 - rd/RR);
+        this.boost = Math.max(this.boost, 1.6*(1 - rd/RR));
+      }
+    }
+
+    var maxTurn = 0.45 + this.boost*0.6;
+    var desired = clamp(wander + steer, -maxTurn, maxTurn);
+    this.omega += (desired - this.omega)*Math.min(1, dt*0.7);
+    this.heading += this.omega*dt;
+
+    var v = this.v0*(1 + 0.1*Math.sin(t*0.25 + this.ph))*(1 + this.boost);
+    this.boost = Math.max(0, this.boost - dt*0.7);
+    h.x += Math.cos(this.heading)*v*dt;
+    h.y += Math.sin(this.heading)*v*dt;
+
+    // the body follows the head
+    for(var i=1;i<this.n;i++){
+      var p = this.pts[i], q = this.pts[i-1];
+      var ex = p.x - q.x, ey = p.y - q.y, dd = Math.hypot(ex, ey) || 1e-4;
+      p.x = q.x + ex/dd*this.seg; p.y = q.y + ey/dd*this.seg;
+    }
+
+    // tail beat speeds up a little when swimming faster
+    this.beat += TAU*(0.35 + v/90)*dt;
+    this.finBeat += TAU*0.25*dt;
+  };
+
+  /* Centerline with a travelling swim wave, plus normals and widths */
+  Koi.prototype.geom = function(){
+    var n = this.n, P = this.pts, A = this.L*0.028, g = { c:[], q:[], hw:[] }, i;
+    for(i=0;i<n;i++){
+      var a = P[Math.max(0, i-1)], b = P[Math.min(n-1, i+1)];
+      var tx = a.x - b.x, ty = a.y - b.y, tl = Math.hypot(tx, ty) || 1e-4;
+      tx /= tl; ty /= tl;
+      var s = i/(n-1);
+      var lat = A*(0.03 + 0.97*s*s*s)*Math.sin(this.beat - s*2.2);
+      g.c.push({ x:P[i].x - ty*lat, y:P[i].y + tx*lat });
+      g.hw.push(this.maxHalf*halfWidth(s));
+    }
+    for(i=0;i<n;i++){
+      var a2 = g.c[Math.max(0, i-1)], b2 = g.c[Math.min(n-1, i+1)];
+      var x = a2.x - b2.x, y = a2.y - b2.y, l = Math.hypot(x, y) || 1e-4;
+      g.q.push({ tx:x/l, ty:y/l, nx:-y/l, ny:x/l });  // t points toward the head
+    }
+    return g;
+  };
+
+  function at(g, s){
+    var f = s*(g.c.length-1), i = Math.min(g.c.length-2, Math.floor(f)), u = f - i;
+    var a = g.c[i], b = g.c[i+1], q = g.q[i];
+    return { x:a.x + (b.x-a.x)*u, y:a.y + (b.y-a.y)*u, tx:q.tx, ty:q.ty, nx:q.nx, ny:q.ny,
+             hw:g.hw[i] + (g.hw[i+1]-g.hw[i])*u };
+  }
+
+  function smoothThrough(p, arr){
+    for(var i=1;i<arr.length-1;i++){
+      p.quadraticCurveTo(arr[i].x, arr[i].y, (arr[i].x+arr[i+1].x)/2, (arr[i].y+arr[i+1].y)/2);
+    }
+    var e = arr[arr.length-1]; p.lineTo(e.x, e.y);
+  }
+
+  function bodyPath(g){
+    var n = g.c.length, Lf = [], Rt = [], i;
+    for(i=0;i<n;i++){
+      var c = g.c[i], q = g.q[i], w = g.hw[i];
+      Lf.push({ x:c.x + q.nx*w, y:c.y + q.ny*w });
+      Rt.push({ x:c.x - q.nx*w, y:c.y - q.ny*w });
+    }
+    var p = new Path2D();
+    p.moveTo(Lf[0].x, Lf[0].y);
+    smoothThrough(p, Lf);
+    p.lineTo(Rt[n-1].x, Rt[n-1].y);
+    smoothThrough(p, Rt.slice().reverse());
+    // blunt, rounded koi snout
+    var h = g.q[0], k = g.hw[0]*1.2;
+    p.bezierCurveTo(Rt[0].x + h.tx*k, Rt[0].y + h.ty*k, Lf[0].x + h.tx*k, Lf[0].y + h.ty*k, Lf[0].x, Lf[0].y);
+    p.closePath();
+    return p;
+  }
+
+  var RAY = 'rgba(110,125,138,0.16)';
+
+  function caudalFin(g, L, beat, col){
+    var n = g.c.length, b = g.c[n-1], q = g.q[n-1];
+    var ang = Math.atan2(-q.ty, -q.tx) + 0.14*Math.sin(beat - 2.6);
+    var len = L*0.3, spr = L*0.15, flex = 0.1*Math.sin(beat - 3.2)*spr;
+    ctx.save();
+    ctx.translate(b.x, b.y); ctx.rotate(ang);
+    ctx.beginPath();
+    ctx.moveTo(-L*0.02, 0);
+    ctx.bezierCurveTo(len*0.35, -spr*0.35, len*0.7, -spr*0.9 + flex, len, -spr + flex);
+    ctx.quadraticCurveTo(len*0.7, -spr*0.25 + flex*0.5, len*0.6, flex*0.4);
+    ctx.quadraticCurveTo(len*0.7, spr*0.25 + flex*0.5, len, spr + flex);
+    ctx.bezierCurveTo(len*0.7, spr*0.9 + flex, len*0.35, spr*0.35, -L*0.02, 0);
+    ctx.closePath();
+    ctx.fillStyle = col; ctx.fill();
+    ctx.strokeStyle = RAY; ctx.lineWidth = 0.8;
+    for(var r=-3;r<=3;r++){
+      ctx.beginPath(); ctx.moveTo(0, 0);
+      ctx.quadraticCurveTo(len*0.5, r*spr*0.12 + flex*0.3, len*0.86, r*spr*0.27 + flex*0.8);
+      ctx.stroke();
+    }
+    ctx.restore();
+  }
+
+  function sideFin(pt, side, len, wid, angle, col){
+    var bx = pt.x + pt.nx*side*pt.hw*0.7, by = pt.y + pt.ny*side*pt.hw*0.7;
+    var a = Math.atan2(-pt.ty, -pt.tx) - side*angle;   // swept back and outward
+    ctx.save();
+    ctx.translate(bx, by); ctx.rotate(a); ctx.scale(1, side);
+    ctx.beginPath();
+    ctx.moveTo(0, 0);
+    ctx.quadraticCurveTo(len*0.3, -wid, len, -wid*0.1);
+    ctx.quadraticCurveTo(len*0.75, wid*0.75, 0, 0);
+    ctx.closePath();
+    ctx.fillStyle = col; ctx.fill();
+    ctx.strokeStyle = RAY; ctx.lineWidth = 0.7;
+    for(var r=1;r<=3;r++){
+      ctx.beginPath(); ctx.moveTo(0, 0);
+      ctx.lineTo(len*0.85, -wid*0.55 + r*wid*0.28);
+      ctx.stroke();
+    }
+    ctx.restore();
+  }
+
+  function strokeAlong(g, s0, s1, width, style){
+    var a = at(g, s0);
+    ctx.beginPath(); ctx.moveTo(a.x, a.y);
+    for(var s=s0+0.04; s<=s1; s+=0.04){ var p = at(g, s); ctx.lineTo(p.x, p.y); }
+    ctx.lineWidth = width; ctx.strokeStyle = style; ctx.lineCap = 'round'; ctx.lineJoin = 'round';
+    ctx.stroke();
+  }
+
+  Koi.prototype.draw = function(){
+    var g = this.geom(), L = this.L, v = this.variety, i;
+    ctx.save();
+    ctx.globalAlpha = this.depth;
+
+    // fins first, so the body overlaps their roots
+    ctx.shadowColor = 'rgba(20,35,45,0.08)';
+    ctx.shadowBlur = 10*DPR; ctx.shadowOffsetX = L*0.03*DPR; ctx.shadowOffsetY = L*0.05*DPR;
+    caudalFin(g, L, this.beat, v.fin);
+    var pec = at(g, 0.22), pel = at(g, 0.56);
+    for(var side=-1; side<=1; side+=2){
+      sideFin(pec, side, L*0.17, L*0.085, 0.95 + 0.14*Math.sin(this.finBeat + side*0.5), v.fin);
+      sideFin(pel, side, L*0.08, L*0.04, 0.6 + 0.08*Math.sin(this.finBeat*1.3 + side), v.fin);
+    }
+
+    // body with a soft underwater shadow
+    var path = bodyPath(g);
+    ctx.shadowColor = 'rgba(20,35,45,0.2)';
+    ctx.shadowBlur = 16*DPR; ctx.shadowOffsetX = L*0.04*DPR; ctx.shadowOffsetY = L*0.065*DPR;
+    ctx.fillStyle = v.body;
+    ctx.fill(path);
+    ctx.shadowColor = 'transparent';
+
+    // pattern + sheen, clipped to the silhouette
+    ctx.save();
+    ctx.clip(path);
+    for(i=0;i<this.spots.length;i++){
+      var sp = this.spots[i], p = at(g, sp.s);
+      ctx.beginPath();
+      ctx.ellipse(p.x + p.nx*sp.lat*p.hw, p.y + p.ny*sp.lat*p.hw,
+                  sp.ra*L, sp.rb*this.maxHalf, Math.atan2(p.ty, p.tx) + sp.rot, 0, TAU);
+      ctx.fillStyle = sp.c; ctx.fill();
+    }
+    strokeAlong(g, 0.06, 0.7, this.maxHalf*0.55, 'rgba(255,255,255,0.2)');
+    ctx.restore();
+
+    // faint outline so white koi read on a white pond
+    ctx.lineWidth = 1; ctx.strokeStyle = 'rgba(30,45,55,0.12)';
+    ctx.stroke(path);
+
+    // dorsal fin ridge
+    strokeAlong(g, 0.32, 0.66, L*0.018, 'rgba(90,100,110,0.16)');
+
+    // eyes
+    var e = at(g, 0.07), er = Math.max(1.4, L*0.011);
+    for(var s2=-1; s2<=1; s2+=2){
+      var ex = e.x + e.nx*s2*e.hw*0.62, ey = e.y + e.ny*s2*e.hw*0.62;
+      ctx.beginPath(); ctx.arc(ex, ey, er, 0, TAU); ctx.fillStyle = '#141518'; ctx.fill();
+      ctx.beginPath(); ctx.arc(ex + e.tx*er*0.35, ey + e.ty*er*0.35, er*0.35, 0, TAU);
+      ctx.fillStyle = 'rgba(255,255,255,0.8)'; ctx.fill();
+    }
+    ctx.restore();
+  };
+
+  /* ---------- Pond ---------- */
+  var count = clamp(Math.round(W*H/80000), 8, 18);
+  var school = [];
+  for(var c=0;c<count;c++) school.push(new Koi());
+  // smaller koi swim a little deeper (drawn first, slightly faded)
+  school.sort(function(a,b){ return a.L - b.L; });
+  var minL = school[0].L, maxL = school[school.length-1].L;
+  school.forEach(function(k){ k.depth = 0.72 + 0.28*((k.L - minL)/Math.max(1, maxL - minL)); });
+
+  var rings = [], nextDrop = 2.5;
+
+  function drawRings(dt){
+    for(var i=rings.length-1;i>=0;i--){
+      var r = rings[i];
+      r.age += dt;
+      if(r.age > r.max){ rings.splice(i, 1); continue; }
+      var life = 1 - r.age/r.max;
+      for(var k=0;k<2;k++){
+        var rad = r.age*r.spd - k*14;
+        if(rad <= 0) continue;
+        ctx.beginPath(); ctx.arc(r.x, r.y, rad, 0, TAU);
+        ctx.strokeStyle = 'rgba(130,160,180,' + (r.alpha*life*(k ? 0.6 : 1)) + ')';
+        ctx.lineWidth = 1.4;
+        ctx.stroke();
+      }
+    }
+  }
+
+  window.addEventListener('pointerdown', function(e){
+    if(reduce) return;
+    rings.push({ x:e.clientX, y:e.clientY, age:0, max:2.2, spd:70, alpha:0.45, amb:false });
+  });
+
+  var last = performance.now(), T = 0;
+  function frame(now){
+    var dt = Math.min(0.05, (now - last)/1000); last = now; T += dt;
+    ctx.clearRect(0, 0, W, H);
+
+    nextDrop -= dt;
+    if(nextDrop <= 0){
+      rings.push({ x:rand(0, W), y:rand(0, H), age:0, max:rand(2.6, 3.6), spd:rand(28, 40), alpha:0.25, amb:true });
+      nextDrop = rand(3, 6);
+    }
+    drawRings(dt);
+
+    for(var i=0;i<school.length;i++){ school[i].step(dt, T, school, rings); school[i].draw(); }
+    requestAnimationFrame(frame);
+  }
+
+  function drawStatic(){
+    ctx.clearRect(0, 0, W, H);
+    for(var i=0;i<school.length;i++) school[i].draw();
+  }
+
+  window.addEventListener('resize', function(){ resize(); if(reduce) drawStatic(); });
+  if(reduce) drawStatic(); else requestAnimationFrame(frame);
+})();
+</script>
 </body>
 </html>
