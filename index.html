@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Alec Teran · OffSec & Vulnerability Analysis + Management</title>
+  <meta name="description" content="Portfolio of Alec Teran, aspiring red teamer learning C, Linux, and systems exploitation." />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎏</text></svg>" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@500;700;800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <!-- The koi pond: animated canvas behind everything -->
+  <canvas id="pond" aria-hidden="true"></canvas>
+
+  <header class="nav">
+    <a href="#top" class="nav__brand">
+      <span class="nav__kanji">鯉</span>
+      <span>Alec Teran</span>
+    </a>
+    <nav>
+      <ul class="nav__links">
+        <li><a href="#about">About</a></li>
+        <li><a href="#focus">Focus</a></li>
+        <li><a href="#learning">Learning</a></li>
+        <li><a href="#projects">Projects</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main id="top">
+    <!-- ============ HERO ============ -->
+    <section class="hero">
+      <div class="hero__kanji" aria-hidden="true">鯉</div>
+      <p class="eyebrow">Offensive Security · Red Team</p>
+      <h1 class="hero__title">
+        Hi, I'm <span class="accent">Alec Teran</span>
+      </h1>
+      <p class="hero__tagline">
+        Aspiring red teamer with concurrent focuses in learning <strong>C</strong>,
+        <strong>Linux</strong>, and <strong>systems exploitation</strong>.
+      </p>
+
+      <div class="terminal" role="img" aria-label="Terminal showing whoami output">
+        <div class="terminal__bar"><span></span><span></span><span></span></div>
+        <pre class="terminal__body"><span class="t-prompt">koi@pond:~$</span> whoami
+<span class="t-out">astolica</span>
+<span class="t-prompt">koi@pond:~$</span> cat focus.txt
+<span class="t-out">red teaming // exploit dev // linux internals</span>
+<span class="t-prompt">koi@pond:~$</span> <span class="cursor">▌</span></pre>
+      </div>
+
+      <div class="hero__cta">
+        <a href="#projects" class="btn btn--primary">View Projects</a>
+        <a href="https://github.com/astolica" class="btn btn--ghost" target="_blank" rel="noopener">GitHub ↗</a>
+      </div>
+      <p class="hero__hint">tip: click the pond to feed the koi</p>
+    </section>
+
+    <!-- ============ ABOUT ============ -->
+    <section id="about" class="section">
+      <h2 class="section__title"><span class="section__num">01</span> The Koi's Path</h2>
+      <div class="card about">
+        <blockquote class="about__quote">
+          Legend says a koi that swims up the waterfall at the Dragon Gate
+          becomes a dragon.
+        </blockquote>
+        <div class="about__text">
+          <p>
+            My name is <strong>Alec Teran</strong>, a student at the University of Arizona
+            working toward a career in <strong>red teaming</strong> and offensive security.
+            I'm drawn to understanding systems from the ground up, how memory, processes,
+            and the kernel really work, so I can find where they may break.
+          </p>
+          <p>
+            Right now I'm building my foundation in C, Linux, and systems exploitation.
+            Like the koi, I'm in it for the long climb.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ FOCUS ============ -->
+    <section id="focus" class="section">
+      <h2 class="section__title"><span class="section__num">02</span> Red Team Focus</h2>
+      <div class="grid grid--3">
+        <article class="card focus">
+          <div class="focus__icon">⚔</div>
+          <h3>Exploit Development</h3>
+          <p>Memory corruption, stack and heap exploitation, and bypassing modern mitigations like NX, ASLR, and stack canaries.</p>
+        </article>
+        <article class="card focus">
+          <div class="focus__icon">🐧</div>
+          <h3>Linux Internals</h3>
+          <p>Processes, syscalls, permissions, and the ELF format. Knowing the OS well enough to escalate, persist, and evade.</p>
+        </article>
+        <article class="card focus">
+          <div class="focus__icon">🎯</div>
+          <h3>Adversary Mindset</h3>
+          <p>Thinking like an attacker so defenders can do better. Recon, initial access, privilege escalation, and clear reporting.</p>
+        </article>
+      </div>
+    </section>
+
+    <!-- ============ LEARNING ============ -->
+    <section id="learning" class="section">
+      <h2 class="section__title"><span class="section__num">03</span> Currently Learning</h2>
+      <p class="section__lead">Every scale on the koi is earned. Here's where I'm at.</p>
+
+      <!-- TODO: adjust the --progress values (0–100) and topics as you grow -->
+      <div class="grid grid--3">
+        <article class="card learn">
+          <header class="learn__head">
+            <h3>C Programming</h3>
+            <span class="badge">in progress</span>
+          </header>
+          <div class="progress" style="--progress: 20"><span></span></div>
+          <ul class="learn__list">
+            <li class="done">Pointers &amp; memory layout</li>
+            <li class="done">Structs, arrays, strings</li>
+            <li>Dynamic memory (malloc/free)</li>
+            <li>Writing safe vs. unsafe code</li>
+          </ul>
+        </article>
+
+        <article class="card learn">
+          <header class="learn__head">
+            <h3>Linux</h3>
+            <span class="badge">in progress</span>
+          </header>
+          <div class="progress" style="--progress: 40"><span></span></div>
+          <ul class="learn__list">
+            <li class="done">Shell, filesystem, permissions</li>
+            <li class="done">Processes &amp; signals</li>
+            <li>Syscalls &amp; strace/ltrace</li>
+            <li>ELF binaries &amp; linking</li>
+          </ul>
+        </article>
+
+        <article class="card learn">
+          <header class="learn__head">
+            <h3>Systems Exploitation</h3>
+            <span class="badge badge--new">just started</span>
+          </header>
+          <div class="progress" style="--progress: 15"><span></span></div>
+          <ul class="learn__list">
+            <li class="done">Stack frames &amp; GDB basics</li>
+            <li>Stack buffer overflows</li>
+            <li>Format string bugs</li>
+            <li>ROP &amp; ret2libc</li>
+          </ul>
+        </article>
+      </div>
+
+      <div class="card tools">
+        <h3>Toolbox</h3>
+        <!-- TODO: add/remove tools you actually use -->
+        <ul class="tags">
+          <li>C</li><li>Bash</li><li>Python</li><li>GDB / pwndbg</li>
+          <li>Ghidra</li><li>pwntools</li><li>Linux</li><li>Git</li>
+          <li>Flask</li><li>MySQL</li><li>Nmap</li><li>Ollama</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ============ PROJECTS ============ -->
+    <section id="projects" class="section">
+      <h2 class="section__title"><span class="section__num">04</span> Projects</h2>
+      <p class="section__lead">Things I've built and broken along the way.</p>
+
+      <!-- To add a project, copy one <article class="card project"> block. -->
+      <div class="grid grid--2">
+        <article class="card project">
+          <div class="project__koi" aria-hidden="true"></div>
+          <p class="project__meta">Purple Team · AI Security</p>
+          <h3>R3D</h3>
+          <p>A fully local, autonomous purple team agent. It runs OSINT and active recon, correlates CVEs against a local NVD database, tests AI attack surfaces, and maps each finding to MITRE ATT&amp;CK and to frameworks like NIST 800-53 and ISO 27001. A built-in verifier catches LLM hallucinations before they reach the report.</p>
+          <ul class="tags tags--sm"><li>Python</li><li>Ollama</li><li>Nmap</li><li>MITRE ATT&amp;CK</li><li>GRC</li></ul>
+          <div class="project__links">
+            <a href="https://github.com/astolica/R3D-SIFT" target="_blank" rel="noopener">Code ↗</a>
+          </div>
+        </article>
+
+        <article class="card project">
+          <div class="project__koi" aria-hidden="true"></div>
+          <p class="project__meta">Deception · Threat Detection</p>
+          <h3>SweetSting</h3>
+          <p>A honeypot and canary-credential framework for low-resource Linux systems. It serves a fake router login page, logs every attempt to MySQL, fires alerts when planted canary credentials are used, and shows activity live in a terminal dashboard. It's exposed through a Cloudflare Tunnel.</p>
+          <ul class="tags tags--sm"><li>Python</li><li>Flask</li><li>MySQL</li><li>Honeypot</li><li>Raspberry Pi</li></ul>
+          <div class="project__links">
+            <a href="https://github.com/astolica/SweetSting" target="_blank" rel="noopener">Code ↗</a>
+          </div>
+        </article>
+
+        <article class="card project">
+          <div class="project__koi" aria-hidden="true"></div>
+          <p class="project__meta">Workshop · WiCyS Tucson</p>
+          <h3>Cryptography CTF Scripts</h3>
+          <p>Solver scripts I built for a cryptography CTF workshop with the Women in Cybersecurity (WiCyS) Tucson Student Chapter. They cover encodings, Caesar brute-forcing, XOR, modular arithmetic, and RSA encryption and decryption from first principles.</p>
+          <ul class="tags tags--sm"><li>Python</li><li>RSA</li><li>XOR</li><li>CTF</li><li>Teaching</li></ul>
+          <div class="project__links">
+            <a href="https://github.com/astolica/cryptographyCTFScripts" target="_blank" rel="noopener">Code ↗</a>
+          </div>
+        </article>
+
+        <article class="card project">
+          <div class="project__koi" aria-hidden="true"></div>
+          <p class="project__meta">Learning in Public</p>
+          <h3>beej: Learning C</h3>
+          <p>My C learning journal, worked through Beej's Guide chapter by chapter. It covers operators and flow control, functions, arrays and pointers, file I/O, and dynamic memory with <code>malloc</code>: the foundation for systems exploitation.</p>
+          <ul class="tags tags--sm"><li>C</li><li>Pointers</li><li>malloc</li><li>File I/O</li></ul>
+          <div class="project__links">
+            <a href="https://github.com/astolica/beej" target="_blank" rel="noopener">Code ↗</a>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- ============ CONTACT ============ -->
+    <section id="contact" class="section">
+      <h2 class="section__title"><span class="section__num">05</span> Contact</h2>
+      <div class="card contact">
+        <p>Want to talk security, CTFs, or opportunities? Find me on GitHub or LinkedIn.</p>
+        <div class="contact__links">
+          <a href="https://github.com/astolica" target="_blank" rel="noopener" class="btn btn--ghost">GitHub</a>
+          <a href="https://www.linkedin.com/in/alec-t-744352376/" target="_blank" rel="noopener" class="btn btn--primary">LinkedIn</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <p>© <span id="year"></span> Alec Teran · 七転び八起き: fall seven times, rise eight.</p>
+    <p class="footer__ethics">All security testing shown here was done on systems I own or am authorized to test.</p>
+  </footer>
+
+  <script src="js/koi.js"></script>
+</body>
+</html>
